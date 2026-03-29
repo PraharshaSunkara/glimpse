@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="225" viewBox="0 0 400 225">
+  <!-- Background -->
+  <rect width="400" height="225" fill="#0f1117"/>
+
+  <!-- Vignette overlay (radial dark edges simulating wide-angle lens) -->
+  <radialGradient id="vig1" cx="50%" cy="50%" r="70%">
+    <stop offset="60%" stop-color="transparent"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.75"/>
+  </radialGradient>
+  <rect width="400" height="225" fill="url(#vig1)"/>
+
+  <!-- Grid lines - horizontal -->
+  <g stroke="#2a2e38" stroke-width="0.8" opacity="0.9">
+    <line x1="0" y1="28" x2="400" y2="28"/>
+    <line x1="0" y1="56" x2="400" y2="56"/>
+    <line x1="0" y1="84" x2="400" y2="84"/>
+    <line x1="0" y1="112" x2="400" y2="112"/>
+    <line x1="0" y1="140" x2="400" y2="140"/>
+    <line x1="0" y1="168" x2="400" y2="168"/>
+    <line x1="0" y1="196" x2="400" y2="196"/>
+  </g>
+  <!-- Grid lines - vertical -->
+  <g stroke="#2a2e38" stroke-width="0.8" opacity="0.9">
+    <line x1="44" y1="0" x2="44" y2="225"/>
+    <line x1="89" y1="0" x2="89" y2="225"/>
+    <line x1="133" y1="0" x2="133" y2="225"/>
+    <line x1="178" y1="0" x2="178" y2="225"/>
+    <line x1="222" y1="0" x2="222" y2="225"/>
+    <line x1="267" y1="0" x2="267" y2="225"/>
+    <line x1="311" y1="0" x2="311" y2="225"/>
+    <line x1="356" y1="0" x2="356" y2="225"/>
+  </g>
+
+  <!-- Wide-angle lens distortion lines (subtle arcs) -->
+  <g stroke="#1e2229" stroke-width="1" fill="none" opacity="0.7">
+    <ellipse cx="200" cy="112" rx="80" ry="45"/>
+    <ellipse cx="200" cy="112" rx="140" ry="78"/>
+    <ellipse cx="200" cy="112" rx="190" ry="105"/>
+  </g>
+
+  <!-- Street/road suggestion -->
+  <g opacity="0.3">
+    <rect x="160" y="60" width="80" height="105" fill="#1a1d24"/>
+    <rect x="0" y="95" width="400" height="30" fill="#1a1d24"/>
+    <!-- Center lane markers -->
+    <rect x="195" y="95" width="10" height="8" fill="#3a3d45" rx="1"/>
+    <rect x="195" y="112" width="10" height="8" fill="#3a3d45" rx="1"/>
+  </g>
+
+  <!-- Timestamp top-left -->
+  <rect x="0" y="0" width="180" height="18" fill="#000000" opacity="0.5"/>
+  <text x="6" y="13" font-family="monospace" font-size="10" fill="#00cc44">2026-03-29  08:14:33</text>
+
+  <!-- REC indicator -->
+  <circle cx="370" cy="10" r="5" fill="#cc2200"/>
+  <text x="378" y="14" font-family="monospace" font-size="9" fill="#cc2200">REC</text>
+
+  <!-- Camera icon (top-right corner) -->
+  <g transform="translate(8, 195)">
+    <rect x="0" y="4" width="20" height="14" rx="2" fill="none" stroke="#4a90d9" stroke-width="1.5"/>
+    <polygon points="20,7 26,4 26,18 20,15" fill="none" stroke="#4a90d9" stroke-width="1.5"/>
+    <circle cx="9" cy="11" r="3" fill="none" stroke="#4a90d9" stroke-width="1.2"/>
+  </g>
+
+  <!-- Location label bar -->
+  <rect x="0" y="207" width="400" height="18" fill="#000000" opacity="0.65"/>
+  <text x="200" y="220" font-family="monospace" font-size="10" fill="#c8d0dc" text-anchor="middle">CAM-01  MAIN ST &amp; AKARD ST  DTX</text>
+</svg>
