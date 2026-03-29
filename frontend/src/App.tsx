@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="h-screen w-screen overflow-hidden bg-gray-900">
       <header className="fixed top-0 left-0 right-0 h-12 z-10 bg-gray-900 flex items-center px-4 border-b border-gray-700">
-        <span className="text-white font-semibold tracking-wide">SightLine</span>
+        <span className="text-white font-semibold tracking-wide">Glimpse</span>
         {loading && (
           <span className="ml-3 text-gray-400 text-sm">Loading cameras…</span>
         )}

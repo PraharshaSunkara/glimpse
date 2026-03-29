@@ -1,5 +1,5 @@
 {
-  "name": "sightline",
+  "name": "glimpse",
   "private": true,
   "workspaces": ["backend", "frontend"],
   "scripts": {

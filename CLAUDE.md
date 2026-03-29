@@ -1,4 +1,4 @@
-# SightLine — Project Context for Claude
+# Glimpse — Project Context for Claude
 
 ## What this is
 A law enforcement investigative tool. Investigators view a map of 

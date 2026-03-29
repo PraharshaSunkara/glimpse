@@ -1,4 +1,4 @@
-# SightLine — Code Explanations
+# Glimpse — Code Explanations
 
 ---
 
@@ -192,7 +192,7 @@ export default function App() {
   return (
     <div className="h-screen w-screen overflow-hidden bg-gray-900">
       <header className="fixed top-0 left-0 right-0 h-12 z-10 ...">
-        <span className="text-white ...">SightLine</span>
+        <span className="text-white ...">Glimpse</span>
         {loading && <span className="...">Loading cameras…</span>}
       </header>
       <div className="pt-12 h-full">
