@@ -20,7 +20,7 @@ to camera owners for footage. No authentication. Single user type.
 ## Camera type → pin color
 - traffic → blue [46, 117, 182]
 - corporate → amber [176, 112, 0]
-- residential → green [45, 106, 45]
+- residential → green [74, 163, 74]
 - bar_restaurant → purple [107, 63, 160]
 - inactive (any type) → gray [136, 136, 136]
 

@@ -26,11 +26,11 @@ type Color = [number, number, number];
 const TYPE_COLORS: Record<Camera["type"], Color> = {
   traffic: [46, 117, 182],
   corporate: [176, 112, 0],
-  residential: [45, 106, 45],
+  residential: [74, 163, 74],
   bar_restaurant: [107, 63, 160],
 };
 
-const INACTIVE_COLOR: Color = [136, 136, 136];
+const INACTIVE_COLOR: Color = [160, 72, 64];
 
 function getCameraColor(camera: Camera): Color {
   if (camera.status === "inactive") return INACTIVE_COLOR;
@@ -50,6 +50,7 @@ export default function MapView({ onLoadingChange }: Props) {
   const [drawnZone, setDrawnZone] = useState<Feature<Polygon> | null>(null);
   const [camerasInZone, setCamerasInZone] = useState<Camera[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedCameraIds, setSelectedCameraIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     onLoadingChange(true);
@@ -72,6 +73,11 @@ export default function MapView({ onLoadingChange }: Props) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [drawMode]);
 
+  // Clear camera detail panel when finalization panel opens
+  useEffect(() => {
+    if (showModal) setSelectedCamera(null);
+  }, [showModal]);
+
   function completeZone(ring: [number, number][]) {
     const feature: Feature<Polygon> = {
       type: "Feature",
@@ -83,6 +89,7 @@ export default function MapView({ onLoadingChange }: Props) {
       booleanPointInPolygon(point([c.lng, c.lat]), feature)
     );
     setCamerasInZone(inZone);
+    setSelectedCameraIds(new Set(inZone.map((c) => c.id)));
     setDrawMode(null);
     setDrawingPoints([]);
     setHoverCoord(null);
@@ -123,6 +130,7 @@ export default function MapView({ onLoadingChange }: Props) {
     setShowModal(false);
     setDrawnZone(null);
     setCamerasInZone([]);
+    setSelectedCameraIds(new Set());
     setDrawMode(null);
   }
 
@@ -146,21 +154,70 @@ export default function MapView({ onLoadingChange }: Props) {
     return null;
   }
 
+  // Camera color accounting for finalization state
+  // - Modal open, camera in panel and selected: grey [100,100,100]
+  // - Modal open, camera in panel but deselected: type color, full opacity
+  // - Modal open, camera not yet in panel: type color, reduced opacity (alpha 100) — click to add
+  // - Modal closed: type color, full opacity
+  function getCameraDisplayColor(camera: Camera): [number, number, number, number] {
+    const [r, g, b] = getCameraColor(camera);
+    if (showModal) {
+      const inZone = camerasInZone.some((c) => c.id === camera.id);
+      if (!inZone) return [r, g, b, 100];
+      if (selectedCameraIds.has(camera.id)) return [100, 100, 100, 255];
+      return [r, g, b, 255];
+    }
+    return [r, g, b, 255];
+  }
+
   const previewPath = getPreviewPath();
   const zoneAreaKm2 = drawnZone ? area(drawnZone) / 1_000_000 : 0;
+
+  // White glow rendered beneath pins for cameras that are selected in the panel
+  const cameraHaloLayer =
+    showModal && selectedCameraIds.size > 0
+      ? new ScatterplotLayer<Camera>({
+          id: "camera-halos",
+          data: cameras.filter((c) => selectedCameraIds.has(c.id)),
+          getPosition: (c) => [c.lng, c.lat],
+          getFillColor: [255, 255, 255, 120] as [number, number, number, number],
+          getRadius: 1,
+          radiusMinPixels: 12,
+          radiusMaxPixels: 15,
+          radiusUnits: "pixels",
+          pickable: false,
+        })
+      : null;
 
   const cameraLayer = new ScatterplotLayer<Camera>({
     id: "cameras",
     data: cameras,
     getPosition: (c) => [c.lng, c.lat],
-    getFillColor: getCameraColor,
+    getFillColor: getCameraDisplayColor,
     getRadius: 1,
     radiusMinPixels: 10,
     radiusMaxPixels: 20,
     radiusUnits: "pixels",
     pickable: drawMode === null,
     onClick: ({ object }) => {
-      if (object) setSelectedCamera(object);
+      if (!object) return;
+      if (showModal) {
+        if (camerasInZone.some((c) => c.id === object.id)) {
+          // Camera already in the panel — toggle its selection
+          setSelectedCameraIds((prev) => {
+            const next = new Set(prev);
+            if (next.has(object.id)) next.delete(object.id);
+            else next.add(object.id);
+            return next;
+          });
+        } else {
+          // Camera outside zone — add it to the panel and select it
+          setCamerasInZone((prev) => [...prev, object]);
+          setSelectedCameraIds((prev) => new Set([...prev, object.id]));
+        }
+      } else {
+        setSelectedCamera(object);
+      }
     },
   });
 
@@ -170,9 +227,13 @@ export default function MapView({ onLoadingChange }: Props) {
           id: "drawn-zone",
           data: [drawnZone],
           getPolygon: (f: Feature<Polygon>) => f.geometry.coordinates,
-          getFillColor: [59, 130, 246, 38] as [number, number, number, number],
-          getLineColor: [59, 130, 246, 200] as [number, number, number, number],
-          lineWidthMinPixels: 2,
+          getFillColor: showModal
+            ? ([59, 130, 246, 18] as [number, number, number, number])
+            : ([59, 130, 246, 38] as [number, number, number, number]),
+          getLineColor: showModal
+            ? ([59, 130, 246, 80] as [number, number, number, number])
+            : ([59, 130, 246, 200] as [number, number, number, number]),
+          lineWidthMinPixels: showModal ? 1 : 2,
           filled: true,
           stroked: true,
           pickable: false,
@@ -210,6 +271,7 @@ export default function MapView({ onLoadingChange }: Props) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const layers: any[] = [
+    cameraHaloLayer,
     cameraLayer,
     zoneLayer,
     drawingPathLayer,
@@ -218,27 +280,33 @@ export default function MapView({ onLoadingChange }: Props) {
 
   return (
     <div className="relative w-full h-full">
-      <DeckGL
-        initialViewState={INITIAL_VIEW_STATE}
-        controller={true}
-        layers={layers}
-        onClick={handleMapClick}
-        onHover={(info) => {
-          if (drawMode !== null && info.coordinate) {
-            setHoverCoord(info.coordinate as [number, number]);
-          }
-        }}
-        getCursor={
-          drawMode !== null
-            ? () => "crosshair"
-            : ({ isHovering }: { isHovering: boolean }) =>
-                isHovering ? "pointer" : "grab"
-        }
+      {/* Map area — shifts right when finalization panel is open */}
+      <div
+        className="absolute top-0 bottom-0 right-0"
+        style={{ left: showModal ? 400 : 0 }}
       >
-        <Map mapStyle={MAP_STYLE} />
-      </DeckGL>
+        <DeckGL
+          initialViewState={INITIAL_VIEW_STATE}
+          controller={true}
+          layers={layers}
+          onClick={handleMapClick}
+          onHover={(info) => {
+            if (drawMode !== null && info.coordinate) {
+              setHoverCoord(info.coordinate as [number, number]);
+            }
+          }}
+          getCursor={
+            drawMode !== null
+              ? () => "crosshair"
+              : ({ isHovering }: { isHovering: boolean }) =>
+                  isHovering ? "pointer" : "grab"
+          }
+        >
+          <Map mapStyle={MAP_STYLE} />
+        </DeckGL>
+      </div>
 
-      {/* Draw tool buttons */}
+      {/* Draw tool buttons — positioned relative to the full viewport container */}
       <div className="absolute bottom-6 right-4 flex flex-col gap-2 z-10">
         <button
           onClick={() => handleDrawButtonClick("rectangle")}
@@ -301,7 +369,7 @@ export default function MapView({ onLoadingChange }: Props) {
         </div>
       )}
 
-      {selectedCamera !== null && (
+      {!showModal && selectedCamera !== null && (
         <CameraDetailPanel
           camera={selectedCamera}
           onClose={() => setSelectedCamera(null)}
@@ -315,6 +383,8 @@ export default function MapView({ onLoadingChange }: Props) {
         <FinalizationModal
           camerasInZone={camerasInZone}
           zoneAreaKm2={zoneAreaKm2}
+          selectedIds={selectedCameraIds}
+          setSelectedIds={setSelectedCameraIds}
           onClose={handleModalClose}
           onSend={handleSend}
         />
