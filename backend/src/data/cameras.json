@@ -10,7 +10,7 @@
     "coverageDirection": "Faces east along Main St, covering the Akard intersection and westbound Commerce merge",
     "lastVerified": "2026-01-15T09:00:00Z",
     "status": "active",
-    "placeholderImage": "traffic-1.svg",
+    "placeholderImage": "traffic-1.avif",
     "notes": "High-traffic intersection camera, part of downtown grid monitoring program"
   },
   {
@@ -24,7 +24,7 @@
     "coverageDirection": "Faces north on Griffin St, covering Commerce and southbound I-35E on-ramp visibility",
     "lastVerified": "2026-02-03T10:30:00Z",
     "status": "active",
-    "placeholderImage": "traffic-2.svg",
+    "placeholderImage": "traffic-2.avif",
     "notes": "Monitors commercial vehicle traffic near convention center district"
   },
   {
@@ -38,7 +38,7 @@
     "coverageDirection": "Faces east on Elm St, covering the Deep Ellum gateway at Good-Latimer overpass",
     "lastVerified": "2025-11-22T08:15:00Z",
     "status": "active",
-    "placeholderImage": "traffic-1.svg",
+    "placeholderImage": "traffic-3.jpeg",
     "notes": "Primary entrance camera for Deep Ellum entertainment district on Elm St corridor"
   },
   {
@@ -52,7 +52,7 @@
     "coverageDirection": "Faces west on Canton St toward 1st Ave, covering the southeast Deep Ellum perimeter",
     "lastVerified": "2025-10-08T14:00:00Z",
     "status": "inactive",
-    "placeholderImage": "traffic-2.svg",
+    "placeholderImage": "traffic-4.jpeg",
     "notes": "Camera offline for maintenance — mounting hardware damaged; scheduled for replacement Q2 2026"
   },
   {
@@ -66,7 +66,7 @@
     "coverageDirection": "Faces south on Ross Ave, covering the main lobby entrance plaza and Ross Ave sidewalk",
     "lastVerified": "2026-02-19T11:00:00Z",
     "status": "active",
-    "placeholderImage": "corporate-1.svg",
+    "placeholderImage": "corporate-1.avif",
     "notes": "High-resolution PTZ camera; managed by building security desk on B1 level"
   },
   {
@@ -80,7 +80,7 @@
     "coverageDirection": "Faces east on Main St, covering the building entrance canopy and adjacent parking garage exit",
     "lastVerified": "2026-01-30T09:45:00Z",
     "status": "active",
-    "placeholderImage": "corporate-2.svg",
+    "placeholderImage": "corporate-2.avif",
     "notes": "Retains 30-day rolling footage per building policy; contact security office for access requests"
   },
   {
@@ -94,7 +94,7 @@
     "coverageDirection": "Faces south on Main St, covering hotel valet drop-off and adjacent pedestrian corridor",
     "lastVerified": "2026-03-01T08:00:00Z",
     "status": "active",
-    "placeholderImage": "corporate-3.svg",
+    "placeholderImage": "traffic-5.jpeg",
     "notes": "Dual-lens camera covering both valet entrance and rooftop pool access stairwell"
   },
   {
@@ -108,7 +108,7 @@
     "coverageDirection": "Faces southeast toward McKinney Ave, covering building entry and surface parking lot",
     "lastVerified": "2025-12-10T13:20:00Z",
     "status": "active",
-    "placeholderImage": "corporate-1.svg",
+    "placeholderImage": "traffic-6.jpeg",
     "notes": "Part of multi-camera perimeter system; contact property management for footage requests"
   },
   {
@@ -122,7 +122,7 @@
     "coverageDirection": "Faces north along S Harwood St, covering the market's main parking lot entrance and pedestrian crosswalk",
     "lastVerified": "2026-02-08T10:00:00Z",
     "status": "active",
-    "placeholderImage": "corporate-2.svg",
+    "placeholderImage": "traffic-7.jpeg",
     "notes": "Wide-angle coverage includes The Shed retail building and outdoor vendor stalls"
   },
   {
@@ -136,7 +136,7 @@
     "coverageDirection": "Faces east on Reunion Blvd, covering the parking garage vehicle entrance and Hyatt Regency skybridge walkway",
     "lastVerified": "2026-01-05T07:30:00Z",
     "status": "active",
-    "placeholderImage": "corporate-3.svg",
+    "placeholderImage": "traffic-8.jpeg",
     "notes": "Shared camera infrastructure with adjacent Omni Dallas Hotel; 14-day retention policy"
   },
   {
@@ -150,7 +150,7 @@
     "coverageDirection": "Faces south toward Elm St, covering venue entrance line, ticket booth, and adjacent sidewalk",
     "lastVerified": "2026-02-25T21:00:00Z",
     "status": "active",
-    "placeholderImage": "bar-1.svg",
+    "placeholderImage": "bar-1.avif",
     "notes": "Active weekend evenings and show nights; camera covers the main queue and parking lot driveway"
   },
   {
@@ -164,7 +164,7 @@
     "coverageDirection": "Faces north on Canton St, covering venue entry, adjacent alley, and south sidewalk",
     "lastVerified": "2025-12-18T20:30:00Z",
     "status": "active",
-    "placeholderImage": "bar-2.svg",
+    "placeholderImage": "bar-2.avif",
     "notes": "Camera positioned above awning; covers roughly 40 feet of Canton St in both directions from doorway"
   },
   {
@@ -178,7 +178,7 @@
     "coverageDirection": "Faces west on Commerce St, covering bar entrance, outdoor patio gate, and adjacent parking strip",
     "lastVerified": "2026-03-10T18:00:00Z",
     "status": "active",
-    "placeholderImage": "bar-2.svg",
+    "placeholderImage": "bar-3.jpeg",
     "notes": "Oldest continuously operating bar camera in Deep Ellum; footage reviewed weekly by owner"
   },
   {
@@ -192,7 +192,7 @@
     "coverageDirection": "Faces south on Elm St, covering venue front door, outdoor smoking area, and street-facing windows",
     "lastVerified": "2026-01-20T22:00:00Z",
     "status": "active",
-    "placeholderImage": "bar-1.svg",
+    "placeholderImage": "traffic-9.jpeg",
     "notes": "Second camera covers rear exit on Commerce; this record is for primary Elm St entrance only"
   },
   {
@@ -206,7 +206,7 @@
     "coverageDirection": "Faces south from porch overhang, covering front yard, sidewalk, and approximately 25 feet of Elm St",
     "lastVerified": "2025-11-05T16:00:00Z",
     "status": "active",
-    "placeholderImage": "residential-1.svg",
+    "placeholderImage": "residential-1.avif",
     "notes": "Ring-style doorbell cam plus a secondary wide-angle; resident has cooperated with police previously"
   },
   {
@@ -220,7 +220,7 @@
     "coverageDirection": "Faces north from garage mount, covering driveway, sidewalk, and partial view of Canton St",
     "lastVerified": "2025-10-14T12:00:00Z",
     "status": "inactive",
-    "placeholderImage": "residential-1.svg",
+    "placeholderImage": "residential-2.jpeg",
     "notes": null
   },
   {
@@ -234,7 +234,7 @@
     "coverageDirection": "Faces east from front door mount, covering S Crowdus St sidewalk and adjacent lot",
     "lastVerified": "2026-02-14T09:00:00Z",
     "status": "active",
-    "placeholderImage": "residential-1.svg",
+    "placeholderImage": "traffic-10.jpeg",
     "notes": null
   }
 ]

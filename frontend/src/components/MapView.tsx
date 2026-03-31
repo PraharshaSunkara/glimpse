@@ -5,7 +5,9 @@ import { Map } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Camera } from "../types/camera";
 import CameraDetailPanel from "./CameraDetailPanel";
-import { booleanPointInPolygon, point } from "@turf/turf";
+import FinalizationModal from "./FinalizationModal";
+import type { SendRequestParams } from "./FinalizationModal";
+import { booleanPointInPolygon, point, area } from "@turf/turf";
 import type { Feature, Polygon } from "geojson";
 
 const INITIAL_VIEW_STATE = {
@@ -47,6 +49,7 @@ export default function MapView({ onLoadingChange }: Props) {
   const [hoverCoord, setHoverCoord] = useState<[number, number] | null>(null);
   const [drawnZone, setDrawnZone] = useState<Feature<Polygon> | null>(null);
   const [camerasInZone, setCamerasInZone] = useState<Camera[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     onLoadingChange(true);
@@ -55,10 +58,6 @@ export default function MapView({ onLoadingChange }: Props) {
       .then((data: Camera[]) => setCameras(data))
       .finally(() => onLoadingChange(false));
   }, [onLoadingChange]);
-
-  useEffect(() => {
-    console.log("camerasInZone:", camerasInZone.length);
-  }, [camerasInZone]);
 
   // Cancel drawing on Escape
   useEffect(() => {
@@ -87,6 +86,7 @@ export default function MapView({ onLoadingChange }: Props) {
     setDrawMode(null);
     setDrawingPoints([]);
     setHoverCoord(null);
+    setShowModal(true);
   }
 
   function handleDrawButtonClick(mode: "rectangle" | "polygon") {
@@ -119,6 +119,17 @@ export default function MapView({ onLoadingChange }: Props) {
     }
   }
 
+  function handleModalClose() {
+    setShowModal(false);
+    setDrawnZone(null);
+    setCamerasInZone([]);
+    setDrawMode(null);
+  }
+
+  function handleSend(params: SendRequestParams) {
+    console.log("Send request params:", params);
+  }
+
   // Build the rubber-band preview path shown while cursor moves
   function getPreviewPath(): [number, number][] | null {
     if (drawMode === "rectangle" && drawingPoints.length === 1 && hoverCoord) {
@@ -136,6 +147,7 @@ export default function MapView({ onLoadingChange }: Props) {
   }
 
   const previewPath = getPreviewPath();
+  const zoneAreaKm2 = drawnZone ? area(drawnZone) / 1_000_000 : 0;
 
   const cameraLayer = new ScatterplotLayer<Camera>({
     id: "cameras",
@@ -296,6 +308,15 @@ export default function MapView({ onLoadingChange }: Props) {
           onRequestCamera={(camera) => {
             console.log("Request camera:", camera);
           }}
+        />
+      )}
+
+      {showModal && drawnZone !== null && (
+        <FinalizationModal
+          camerasInZone={camerasInZone}
+          zoneAreaKm2={zoneAreaKm2}
+          onClose={handleModalClose}
+          onSend={handleSend}
         />
       )}
     </div>
